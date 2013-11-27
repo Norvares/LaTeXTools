@@ -25,7 +25,7 @@ class BibParsingError(Exception):
 
 
 OLD_STYLE_CITE_REGEX = re.compile(r"([^_]*_)?([a-zX*]*?)etic(?:\\|\b)")
-NEW_STYLE_CITE_REGEX = re.compile(r"([^{},]*)(?:,[^{},]*)*\{(?:\].*?\[){0,2}([a-zX*]*?)etic\\")
+NEW_STYLE_CITE_REGEX = re.compile(r"([^{},]*)(?:,[^{},]*)*\{(?:\].*?\[){0,2}([a-zX*]*?)etic([a-zX*]*?)\\")
 
 
 def match(rex, str):
@@ -136,7 +136,7 @@ def get_cite_completions(view, point, autocompleting=False):
             raise UnrecognizedCiteFormatError()
 
         preformatted = True
-        prefix, fancy_cite = rex.match(expr).groups()
+        prefix, fancy_cite, preprefix = rex.match(expr).groups()
         if prefix:
             prefix = prefix[::-1]
         else:
