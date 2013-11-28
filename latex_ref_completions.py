@@ -76,6 +76,9 @@ def find_labels_in_files(rootdir, src, labels):
                 f.close()
 
     labels += re.findall(r'\\label\{([^{}]+)\}', src_content)
+    
+    # Autocompletition for \myDef command
+    labels += ['def:'+elt for elt in re.findall(r'\\myDef\{([^{}]+)\}', src_content)]
 
     # search through input tex files recursively
     for f in re.findall(r'\\(?:input|include)\{([^\{\}]+)\}', src_content):
